@@ -1,0 +1,140 @@
+package mx.edu.uttt.vectores;
+
+import javax.swing.JOptionPane;
+import mx.edu.uttt.tda.Empleado;
+
+/**
+ * @author Sil
+ */
+public class DeclaracionVectores {
+
+    public static void main(String[] args) {
+        // Declaraciones de vectores
+        int[] arr1; // Recomendada
+        boolean arr2[];
+
+        arr1 = new int[5];
+        arr2 = new boolean[6];
+
+        Empleado[] empl = new Empleado[4];
+        String[] nombres = {"Rafael", "Simon", "Ricarda", "Toribio"};
+
+        // Llenar Empleado
+        llenarEmpleado(empl);
+    }
+
+    public static void llenarEnteros(int[] vector) {
+        for (int i = 0; i < vector.length; i++) {
+            vector[i] = solicitarEnteros();
+        }
+    }
+
+    public static void llenarEmpleado(Empleado[] emp) {
+        int i = 0;
+        while (i < emp.length) {
+            emp[i] = solicitarEmpleado();
+            i++;
+        }
+    }
+
+    public static Empleado solicitarEmpleado() {
+        do {
+            try {
+                Empleado emp = new Empleado();
+                String nombre, numeroNomina, sexo;
+                double sueldo;
+                boolean activo = true;
+
+                nombre = JOptionPane.showInputDialog(null, "Introduce el nombre: ");
+                numeroNomina = JOptionPane.showInputDialog(null, "Introduce el número de nómina: ");
+                sexo = JOptionPane.showInputDialog(null, "Introduce el sexo: ");
+                sueldo = Double.parseDouble(JOptionPane.showInputDialog("Introduce el sueldo:"));
+
+                emp.setNombre(nombre);
+                emp.setNumeroNomina(numeroNomina);
+                emp.setSexo(sexo);
+                emp.setSueldo(sueldo);
+                emp.setActivo(activo);
+
+                return emp;
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Dato inválido, intenta de nuevo.");
+            }
+        } while (true);
+    }
+
+    public static int solicitarEnteros() {
+        do {
+            try {
+                return Integer.parseInt(JOptionPane.showInputDialog("Introduce el valor:"));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Debe ser un entero");
+            }
+        } while (true);
+    }
+
+    public static void imprimir(int[] arr, int tipoCiclo) {
+        String resultado = "";
+        if (tipoCiclo == 1) {
+            resultado = "[";
+            for (int i = 0; i < arr.length; i++) {
+                resultado += arr[i] + (i < arr.length - 1 ? "," : "");
+            }
+            resultado += "]";
+        } else if (tipoCiclo == 2) {
+            resultado = "[";
+            int i = 0;
+            while (i < arr.length) {
+                resultado += arr[i] + (i < arr.length - 1 ? "," : "");
+                i++;
+            }
+            resultado += "]";
+        } else if (tipoCiclo == 3) {
+            int i = 0;
+            resultado = "[";
+            if (arr.length > 0) {
+                do {
+                    resultado += arr[i] + (i < arr.length - 1 ? "," : "");
+                    i++;
+                } while (i < arr.length);
+            }
+            resultado += "]";
+        } else if (tipoCiclo == 4) {
+            resultado = "[";
+            for (int valor : arr) {
+                resultado += valor + ",";
+            }
+            resultado += "]";
+        }
+        JOptionPane.showMessageDialog(null, resultado);
+    }
+
+    public static void imprimir(Empleado[] arr, int tipoCiclo) {
+        String resultado = "";
+        int i = 0;
+
+        switch (tipoCiclo) {
+            case 1: // for
+                resultado = "[";
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i] != null) {
+                        resultado += "[" + arr[i].getNombre() + " " + arr[i].getNumeroNomina() + " " + arr[i].getSexo() + " " + arr[i].getSueldo() + "] ";
+                    }
+                }
+                resultado += "]";
+                break;
+            case 2: // while
+                resultado = "[";
+                while (i < arr.length) {
+                    if (arr[i] != null) {
+                        resultado += "[" + arr[i].getNombre() + "] ";
+                    }
+                    i++;
+                }
+                resultado += "]";
+                break;
+        }
+        JOptionPane.showMessageDialog(null, resultado);
+    }
+}
